@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-secondary {
+  @apply text-black bg-white border-2 border-gray-500 hover:bg-gray-200 hover:text-black hover:border-gray-500;
+}
+
+.btn-error {
+  @apply text-white;
+}
+
+.z-top {
+  z-index: 999;
+}
