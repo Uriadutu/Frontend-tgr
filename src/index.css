@@ -13,3 +13,19 @@
 .z-top {
   z-index: 999;
 }
+
+.none {
+  display: none;
+}
+.tutup-print {
+  display: block;
+}
+
+@media print {
+  .none {
+    display: block;
+  }
+  .tutup-print {
+    display: none;
+  }
+} 

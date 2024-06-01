@@ -84,6 +84,7 @@ const NoTGRContent = ({ user }) => {
                   type="file"
                   id="ktp"
                   name="ktp"
+              accept="application/pdf"
                   onChange={loadKtp}
                   className="w-full max-w-xs file-input file-input-bordered"
                 />
@@ -99,6 +100,7 @@ const NoTGRContent = ({ user }) => {
                   type="file"
                   id="recommendationLetter"
                   name="recommendationLetter"
+              accept="application/pdf"
                   onChange={loadRekom}
                   className="w-full max-w-xs file-input file-input-bordered"
                 />
@@ -114,6 +116,7 @@ const NoTGRContent = ({ user }) => {
                   type="file"
                   id="applicationLetter"
                   name="applicationLetter"
+              accept="application/pdf"
                   onChange={loadApp}
                   className="w-full max-w-xs file-input file-input-bordered"
                 />

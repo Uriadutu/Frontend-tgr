@@ -9,3 +9,17 @@ export const formatDate = (timestamp) => {
   });
   return formattedDate;
 };
+
+export const tanggalPDF = (tanggal) => {
+  const bulan = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+  ];
+  
+  const hari = tanggal.getDate();
+  const bulanIndex = tanggal.getMonth();
+  const tahun = tanggal.getFullYear();
+
+  return `${hari} ${bulan[bulanIndex]} ${tahun}`;
+};
+
