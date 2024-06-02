@@ -34,10 +34,20 @@ const FormAddUser = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === "isTGR" ? value === "ya" : value,
-    }));
+    setFormData((prevData) => {
+      let updatedValue = name === "isTGR" ? value === "ya" : value;
+      let updatedStatus = prevData.status;
+
+      if (name === "isTGR") {
+        updatedStatus = value === "ya" ? "tgr" : "NULL";
+      }
+
+      return {
+        ...prevData,
+        [name]: updatedValue,
+        status: updatedStatus,
+      };
+    });
   };
 
   const handleSubmit = async (e) => {

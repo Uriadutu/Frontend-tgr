@@ -14,6 +14,7 @@ const FormEditUser = () => {
   const [Password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [Role, setRole] = useState("");
+  const [Status, setStatus] = useState("NULL"); // Tambahkan state untuk status
 
   const getUserById = async (id) => {
     try {
@@ -23,7 +24,10 @@ const FormEditUser = () => {
       setNip(userData.nip);
       setTgr(userData.isTGR);
       setAmountTGR(userData.amountTGR || "");
+      setPassword(""); // Tidak memuat kata sandi pengguna untuk keamanan
+      setconfirmPassword(""); // Tidak memuat kata sandi pengguna untuk keamanan
       setRole(userData.role);
+      setStatus(userData.status); // Atur status dari data pengguna
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -45,6 +49,7 @@ const FormEditUser = () => {
         isTGR: Tgr,
         amountTGR: Tgr ? amountTGR : 0,
         role: Role,
+        status: Tgr ? "tgr" : "NULL", // Mengubah status menjadi "tgr" jika Tgr dipilih
       });
       navigate("/users");
     } catch (error) {
@@ -95,10 +100,12 @@ const FormEditUser = () => {
                     className="w-full input input-bordered"
                     value={Tgr ? "1" : "0"}
                     onChange={(e) => {
-                      setTgr(e.target.value === "1");
-                      if (e.target.value === "0") {
+                      const isTGR = e.target.value === "1";
+                      setTgr(isTGR);
+                      if (!isTGR) {
                         setAmountTGR("");
                       }
+                      setStatus(isTGR ? "tgr" : "NULL"); // Mengatur status sesuai dengan nilai Tgr
                     }}
                   >
                     <option value="0">Tidak</option>
