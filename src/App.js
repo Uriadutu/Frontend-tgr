@@ -9,6 +9,8 @@ import SKPD from "./pages/admin/skpd/SKPD";
 import { Toaster } from "react-hot-toast";
 import SubmissionPage from "./pages/SubmissionPage";
 import SlipPage from "./pages/SlipPage";
+import RiwayatsubPage from "./pages/RiwayatsubPage";
+import PengajuanUserPage from "./pages/PengajuanUserPage";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/skpd" element={<SKPD />} />
           <Route path="/submission" element={<SubmissionPage />} />
           <Route path="/slip" element={<SlipPage />} />
+          <Route path="/riwayatsub" element={<RiwayatsubPage />} />
+          <Route path="/users/lihat/:id" element={<PengajuanUserPage />} />
         </Routes>
       </BrowserRouter>
 

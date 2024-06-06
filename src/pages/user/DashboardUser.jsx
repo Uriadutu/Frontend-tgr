@@ -7,6 +7,7 @@ import NoTGRContent from "./NoTGRContent";
 import DocumentUser from "./DocumentUser";
 import ValidasiUser from "./ValidasiUser";
 import axios from "axios";
+import addNotification from "react-push-notification";
 
 const DashboardUser = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,40 @@ const DashboardUser = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [submission, setSubmission] = useState(null);
   const [slip, setSlip] = useState(null);
+
+  useEffect(() => {
+    if (submission && submission.status === "Diterima") {
+      showSubNotif(`Pengajuan Anda Diterima`);
+    } else if (submission && submission.status === "Ditolak") {
+      showSubNotif(`Pengajuan Anda Ditolak`);
+    }
+
+    if (slip && slip.status === "Diterima") {
+      showSlipNotif(`Slip Anda Diterima`);
+    } else if (slip && slip.status === "Ditolak") {
+      showSlipNotif(`Slip Anda Ditolak`);
+    }
+  }, [submission, slip]);
+
+  const showSubNotif = (message) => {
+    addNotification({
+      title: "Status Pengajuan",
+      message: message,
+      theme: "darkblue",
+      duration: 5000,
+      native: true,
+    });
+  };
+
+  const showSlipNotif = (message) => {
+    addNotification({
+      title: "Status Slip",
+      message: message,
+      theme: "darkblue",
+      duration: 5000,
+      native: true,
+    });
+  };
 
   useEffect(() => {
     dispatch(getMe());
@@ -24,14 +59,13 @@ const DashboardUser = () => {
       navigate("/");
     }
   }, [isError, navigate]);
-const statusNull = () => {
-
-  return (
-    <div className="card-title">
-      <h3 className="mb-4 text-xl font-semibold">Halo, {user.name}</h3>
-    </div>
-  );
-}
+  const statusNull = () => {
+    return (
+      <div className="card-title">
+        <h3 className="mb-4 text-xl font-semibold">Halo, {user.name}</h3>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const fetchSubmissionAndSlip = async () => {
@@ -60,11 +94,14 @@ const statusNull = () => {
   }, [user]);
 
   let contentToRender = null;
-  
 
   if (user) {
-    if (user && user.status === null || user && user.status === "" || user && user.status === "NULL" ) {
-      contentToRender =  statusNull();
+    if (
+      (user && user.status === null) ||
+      (user && user.status === "") ||
+      (user && user.status === "NULL")
+    ) {
+      contentToRender = statusNull();
     } else {
       if (
         (submission && submission.status === "Diproses") ||
@@ -91,8 +128,6 @@ const statusNull = () => {
         }
       }
     }
-    
-   
   }
 
   return <>{contentToRender}</>;

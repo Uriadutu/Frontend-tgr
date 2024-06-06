@@ -22,28 +22,32 @@ const Sidebar = () => {
   };
 
   const Menus = [
-    { title: "Dasbor", icon: <MdDashboard />, to: "/dashboard" },
+    {
+      title: "Dasbor",
+      icon: <MdDashboard />,
+      to: "/dashboard",
+    },
     {
       title: "Riwayat Pembayaran",
       icon: <FaUserFriends />,
       to: "/slip",
     },
     {
-      title: "Daftar Pembayaran",
-      icon: <FaUserFriends />,
-      to: "/slip",
-      admin : true
-    },
-    {
       title: "Riwayat Pengajuan",
       icon: <FaUserFriends />,
-      to: "/submission",
+      to: "/riwayatsub",
     },
     {
       title: "Daftar Pengajuan",
       icon: <FaUserFriends />,
       to: "/submission",
-      admin : true
+      admin: true,
+    },
+    {
+      title: "Daftar Pembayaran",
+      icon: <FaUserFriends />,
+      to: "/slip",
+      admin: true,
     },
     {
       title: "Kelola Pengguna",
@@ -60,14 +64,6 @@ const Sidebar = () => {
   ];
 
   const filteredMenus = Menus.filter((menu) => {
-    if (user && user.role === "admin") {
-      if (
-        menu.title === "Riwayat Pembayaran" ||
-        menu.title === "Riwayat Pengajuan"
-      ) {
-        return false;
-      }
-    }
     return !menu.admin || (user && user.role === "admin");
   });
 

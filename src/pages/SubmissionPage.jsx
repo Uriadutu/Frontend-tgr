@@ -89,6 +89,7 @@ const SubmissionPage = () => {
     }
   };
 
+  
   return (
     <Layout>
       <div className="">
@@ -129,91 +130,94 @@ const SubmissionPage = () => {
           </div>
         )}
         {user && user.role === "admin" && (
-          <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama</th>
-                  <th>Terakhir diperbarui</th>
-                  <th className="text-center">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedSubsAdmin.filter((sub) => sub.status === "Diproses")
-                  .length > 0 ? (
-                  sortedSubsAdmin
-                    .filter((sub) => sub.status === "Diproses")
-                    .map((sub, index) => (
-                      <React.Fragment key={index}>
-                        <tr className="p-2 items-center">
-                          <th>{index + 1}</th>
-                          <td>{sub && sub.user && sub.user.name}</td>
-                          <td>{formatDate(sub.createdAt)}</td>
-                          <td className="flex items-center space-x-2 place-content-center">
-                            <button
-                              type="button"
-                              className="btn btn-primary"
-                              onClick={() => AccSub(sub.id, sub.user.id)}
-                            >
-                              Terima
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-error"
-                              onClick={() => TolakSub(sub.id)}
-                            >
-                              Tolak
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              onClick={() =>
-                                setLihat(lihat === index ? null : index)
-                              }
-                            >
-                              {lihat === index ? "Tutup" : "Lihat"}
-                            </button>
-                          </td>
-                        </tr>
-                        {lihat === index && (
-                          <tr>
-                            <td colSpan="6">
-                              <div className="flex  gap-2">
-                                <Link
-                                  className="btn btn-secondary"
-                                  to={sub && sub.ktpUrl}
-                                >
-                                  FK KTP
-                                </Link>
-                                <Link
-                                  className="btn btn-secondary"
-                                  to={sub && sub.recommendationLetterUrl}
-                                >
-                                  FK Surat Rekomendasi SKPD
-                                </Link>
-                                <Link
-                                  className="btn btn-secondary"
-                                  to={sub && sub.applicationLetterUrl}
-                                >
-                                  Surat Permohonan
-                                </Link>
-                              </div>
+          <>
+          
+            <div className="overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Terakhir diperbarui</th>
+                    <th className="text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortedSubsAdmin.filter((sub) => sub.status === "Diproses")
+                    .length > 0 ? (
+                    sortedSubsAdmin
+                      .filter((sub) => sub.status === "Diproses")
+                      .map((sub, index) => (
+                        <React.Fragment key={index}>
+                          <tr className="p-2 items-center">
+                            <th>{index + 1}</th>
+                            <td>{sub && sub.user && sub.user.name}</td>
+                            <td>{formatDate(sub.createdAt)}</td>
+                            <td className="flex items-center space-x-2 place-content-center">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={() => AccSub(sub.id, sub.user.id)}
+                              >
+                                Terima
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-error"
+                                onClick={() => TolakSub(sub.id)}
+                              >
+                                Tolak
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() =>
+                                  setLihat(lihat === index ? null : index)
+                                }
+                              >
+                                {lihat === index ? "Tutup" : "Lihat"}
+                              </button>
                             </td>
                           </tr>
-                        )}
-                      </React.Fragment>
-                    ))
-                ) : (
-                  <tr>
-                    <td colSpan="6" className="text-center">
-                      Tidak ada data pengajuan.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                          {lihat === index && (
+                            <tr>
+                              <td colSpan="6">
+                                <div className="flex  gap-2">
+                                  <Link
+                                    className="btn btn-secondary"
+                                    to={sub && sub.ktpUrl}
+                                  >
+                                    FK KTP
+                                  </Link>
+                                  <Link
+                                    className="btn btn-secondary"
+                                    to={sub && sub.recommendationLetterUrl}
+                                  >
+                                    FK Surat Rekomendasi SKPD
+                                  </Link>
+                                  <Link
+                                    className="btn btn-secondary"
+                                    to={sub && sub.applicationLetterUrl}
+                                  >
+                                    Surat Permohonan
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center">
+                        Tidak ada data pengajuan.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </Layout>

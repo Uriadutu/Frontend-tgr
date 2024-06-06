@@ -17,6 +17,11 @@ const SKPD = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [id, setId] = useState("");
   const [data, setData] = useState([]);
+  const [userPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState("");
+  const [total, setTotalSkpd] = useState([])
+
   useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
@@ -37,9 +42,16 @@ const SKPD = () => {
       console.error(error);
     }
   };
+  
+   const getTotalskpd = async () => {
+     const response = await fetch("http://localhost:5000/users");
+     const data = await response.json();
+     setTotalSkpd(data.length);
+   };
 
   useEffect(() => {
     fetchSKPD();
+    getTotalskpd();
   }, []);
 
   const handleEdit = (itemId) => {
@@ -51,6 +63,32 @@ const SKPD = () => {
     setId(itemId);
     setIsOpenModalDelete(true);
   };
+   useEffect(() => {
+     setCurrentPage(1);
+   }, [searchText]);
+
+
+  const filterCariUser = data.filter((item) => {
+    const lowerCaseSearchText = searchText.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(lowerCaseSearchText) ||
+      (item.username &&
+        item.username.toLowerCase().includes(lowerCaseSearchText))
+    );
+  });
+  
+  const indexOfLastUser = currentPage * userPage;
+  const indexOfFirstUser = indexOfLastUser - userPage;
+  const currentUser = filterCariUser.slice(indexOfFirstUser, indexOfLastUser);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(filterCariUser.length / userPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+
 
   return (
     <Layout>
@@ -92,7 +130,7 @@ const SKPD = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {currentUser.map((item, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{item.name}</td>
@@ -111,6 +149,30 @@ const SKPD = () => {
             ))}
           </tbody>
         </table>
+        <nav
+          className="flex justify-between items-center mt-4"
+          role="navigation"
+          aria-label="pagination"
+        >
+          <p className="font-semibold">Total User : {total}</p>
+          <ul className="flex gap-4 items-center">
+            {pageNumbers.map((number) => (
+              <li key={number}>
+                <a
+                  className={`pagination-link ${
+                    currentPage === number
+                      ? "btn btn-primary"
+                      : "btn break-normal"
+                  }`}
+                  aria-label={`Page ${number}`}
+                  onClick={() => paginate(number)}
+                >
+                  {number}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </Layout>
   );
