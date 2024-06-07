@@ -11,6 +11,8 @@ import SubmissionPage from "./pages/SubmissionPage";
 import SlipPage from "./pages/SlipPage";
 import RiwayatsubPage from "./pages/RiwayatsubPage";
 import PengajuanUserPage from "./pages/PengajuanUserPage";
+import RiwayatslipPage from "./pages/RiwayatslipPage";
+import SlipUserPage from "./pages/SlipUserPage";
 
 function App() {
   return (
@@ -26,7 +28,9 @@ function App() {
           <Route path="/submission" element={<SubmissionPage />} />
           <Route path="/slip" element={<SlipPage />} />
           <Route path="/riwayatsub" element={<RiwayatsubPage />} />
+          <Route path="/riwayatslip" element={<RiwayatslipPage />} />
           <Route path="/users/lihat/:id" element={<PengajuanUserPage />} />
+          <Route path="/users/lihat/slip/:id" element={<SlipUserPage />} />
         </Routes>
       </BrowserRouter>
 

@@ -8,7 +8,8 @@ import { useState } from "react";
 import { MdDashboard } from "react-icons/md";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { FaBuilding } from "react-icons/fa6";
-
+import { RiFolderHistoryFill } from "react-icons/ri";
+import { FaListAlt } from "react-icons/fa";
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
@@ -29,23 +30,23 @@ const Sidebar = () => {
     },
     {
       title: "Riwayat Pembayaran",
-      icon: <FaUserFriends />,
-      to: "/slip",
+      icon: <RiFolderHistoryFill />,
+      to: "/riwayatslip",
     },
     {
       title: "Riwayat Pengajuan",
-      icon: <FaUserFriends />,
+      icon: <RiFolderHistoryFill />,
       to: "/riwayatsub",
     },
     {
       title: "Daftar Pengajuan",
-      icon: <FaUserFriends />,
+      icon: <FaListAlt />,
       to: "/submission",
       admin: true,
     },
     {
       title: "Daftar Pembayaran",
-      icon: <FaUserFriends />,
+      icon: <FaListAlt />,
       to: "/slip",
       admin: true,
     },
