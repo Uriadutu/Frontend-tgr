@@ -58,6 +58,9 @@ const DashboardUser = () => {
     if (isError) {
       navigate("/");
     }
+    if (!user) {
+      navigate("/");
+    }
   }, [isError, navigate]);
   const statusNull = () => {
     return (
@@ -95,13 +98,14 @@ const DashboardUser = () => {
 
   let contentToRender = null;
 
-  if (user) {
     if (
       (user && user.status === null) ||
       (user && user.status === "") ||
       (user && user.status === "NULL")
     ) {
       contentToRender = statusNull();
+      console.log("status null");
+
     } else {
       if (
         (submission && submission.status === "Diproses") ||
@@ -128,7 +132,7 @@ const DashboardUser = () => {
         }
       }
     }
-  }
+ 
 
   return <>{contentToRender}</>;
 };

@@ -20,9 +20,7 @@ const DashboardAdmin = () => {
     ditolak: 0,
   });
 
- 
-
-  const getStatusSlip = async() => {
+  const getStatusSlip = async () => {
     try {
       const response = await fetch("http://localhost:5000/slips");
       const data = await response.json();
@@ -45,7 +43,7 @@ const DashboardAdmin = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }
+  };
 
   const getStatus = async () => {
     try {
@@ -71,18 +69,18 @@ const DashboardAdmin = () => {
       console.error("Error fetching data:", error);
     }
   };
-  const getSlip = async() => {
+  const getSlip = async () => {
     try {
       const response = await fetch("http://localhost:5000/slips");
       const data = await response.json();
       setSlip(data.length);
     } catch (error) {}
-  }
+  };
 
   useEffect(() => {
     getSubmissions();
-    getStatusSlip()
-    getSlip()
+    getStatusSlip();
+    getSlip();
     getStatus();
   }, []);
 
@@ -93,7 +91,6 @@ const DashboardAdmin = () => {
       setJmlhSub(data.length);
     } catch (error) {}
   };
-
 
   return (
     <>

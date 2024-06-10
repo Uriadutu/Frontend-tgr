@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
 import axios from "axios";
+import ModalKeterangan from "./modal/ModalKeterangan";
 
 const RiwayatSlip = () => {
   const dispatch = useDispatch();
@@ -11,17 +12,24 @@ const RiwayatSlip = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [SubsAdmin, setSubsAdmin] = useState([]);
   const id = user && user.id;
+  const [modalKet, setModalKet] = useState(false);
+  const [idSlip, setIdSlip] = useState([])
 
-   const getSubbyId = async (userId) => {
-     try {
-       const response = await axios.get(
-         `http://localhost:5000/slips/user/${userId}`
-       );
-       setSubsAdmin(response.data);
-     } catch (error) {
-       console.log(error);
-     }
-   };
+  const handleOpenModal = (id) => {
+    setIdSlip(id);
+    setModalKet(true);
+  };
+
+  const getSubbyId = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/slips/user/${userId}`
+      );
+      setSubsAdmin(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getMe());
@@ -43,7 +51,7 @@ const RiwayatSlip = () => {
     getUsers();
     getTotalUser();
     getSubbyId(id);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -93,28 +101,41 @@ const RiwayatSlip = () => {
                   <th>No</th>
                   <th>Nama</th>
                   <th>Status</th>
+                  <th>Keterangan</th>
                   <th>Terakhir diperbarui</th>
                 </tr>
               </thead>
               <tbody>
-                {SubsAdmin.map((item, index) => (
+                {SubsAdmin && SubsAdmin.map((item, index) => (
                   <tr key={index} className="p-2">
                     <th>{index + 1}</th>
                     <td>
                       Fotokopi KTP, Surat Rekomendasi dan Surat Permohonan
                     </td>
-                    <td
-                      className={` ${
-                        item.status === "Diterima"
-                          ? "badge bg-green-600 text-white"
-                          : item.status === "Ditolak"
-                          ? "badge bg-red-600 text-white"
-                          : "badge bg-yellow-600 text-white"
-                      }`}
-                    >
-                      {item.status}
+                    <td>
+                      <span
+                        className={` ${
+                          item && item.status === "Diterima"
+                            ? "badge bg-green-600 text-white"
+                            : item && item.status === "Ditolak"
+                            ? "badge bg-red-600 text-white"
+                            : "badge bg-yellow-600 text-white"
+                        }`}
+                      >
+                        {item && item.status}
+                      </span>
                     </td>
-                    <td>{formatDate(item.createdAt)}</td>
+                    <td className="">
+                      {item && item.keterangan !== "-" ? (
+                        <button className="btn btn-secondary" onClick={() => handleOpenModal(item.uuid)}>Lihat</button>
+                      ) : (
+                        <p>-</p>
+                      )}
+                    </td>
+                    <td>{formatDate(item && item.createdAt)}</td>
+                    {modalKet && (
+                      <ModalKeterangan setModalKeterangan={setModalKet} idSlip={idSlip} />
+                    )}
                   </tr>
                 ))}
               </tbody>

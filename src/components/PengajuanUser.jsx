@@ -40,6 +40,14 @@ const PengajuanUser = () => {
     getSubbyId(id);
   }, []);
 
+  const hapusSubs = async (idsub)=> {
+    try {
+        await axios.delete(`http://localhost:5000/submissions/${idsub}`);
+        getSubbyId(id);
+    } catch (error) {
+        console.log(error);
+    }
+  }
   return (
     <>
       <div className="">
@@ -90,7 +98,8 @@ const PengajuanUser = () => {
                           >
                             {lihat === index ? "Tutup" : "Lihat"}
                           </button>
-                          <button type="button" className="btn btn-primary">
+                          <button type="button" className="btn btn-primary"
+                          onClick={()=> hapusSubs(item && item.id)}>
                             Hapus
                           </button>
                         </td>

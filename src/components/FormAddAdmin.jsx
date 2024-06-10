@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ToastNotification from "./toast/toast-notification";
 
-const FormAddUser = () => {
+const FormAddAdmin = () => {
   const [formData, setFormData] = useState({
     name: "",
     nip: "",
@@ -11,7 +11,7 @@ const FormAddUser = () => {
     isTGR: false,
     amountTGR: 0,
     confirmPassword: "",
-    role: "user",
+    role: "admin",
     skpdId: 3,
     status: "NULL",
   });
@@ -84,7 +84,7 @@ const FormAddUser = () => {
 
   return (
     <div>
-      <h2 className="">Tambah Pengguna Baru</h2>
+      <h2 className="">Tambah Admin Baru</h2>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
@@ -137,37 +137,6 @@ const FormAddUser = () => {
                   </select>
                 </div>
               </div>
-
-              <div className="field">
-                <label className="label">Ada TGR?</label>
-                <div className="control">
-                  <select
-                    name="isTGR"
-                    className="w-full input input-bordered"
-                    value={formData.isTGR ? "ya" : "tidak"}
-                    onChange={handleChange}
-                  >
-                    <option value="tidak">Tidak</option>
-                    <option value="ya">Ya</option>
-                  </select>
-                </div>
-              </div>
-
-              {formData.isTGR && (
-                <div className="field">
-                  <label className="label">Jumlah TGR</label>
-                  <div className="control">
-                    <input
-                      type="number"
-                      name="amountTGR"
-                      className="w-full input input-bordered"
-                      value={formData.amountTGR}
-                      onChange={handleChange}
-                      placeholder="0"
-                    />
-                  </div>
-                </div>
-              )}
 
               <div className="field">
                 <label className="label">Kata Sandi</label>
@@ -227,4 +196,4 @@ const FormAddUser = () => {
   );
 };
 
-export default FormAddUser;
+export default FormAddAdmin;

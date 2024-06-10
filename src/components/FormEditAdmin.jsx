@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const FormEditUser = () => {
+const FormEditAdmin = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -46,10 +46,6 @@ const FormEditUser = () => {
         nip: Nip,
         password: Password,
         confirmPassword: confirmPassword,
-        isTGR: Tgr,
-        amountTGR: Tgr ? amountTGR : 0,
-        role: Role,
-        status: Tgr ? "tgr" : "NULL", // Mengubah status menjadi "tgr" jika Tgr dipilih
       });
       navigate("/users");
     } catch (error) {
@@ -93,40 +89,7 @@ const FormEditUser = () => {
                   />
                 </div>
               </div>
-              <div className="field">
-                <label className="label">Ada TGR?</label>
-                <div className="control">
-                  <select
-                    className="w-full input input-bordered"
-                    value={Tgr ? "1" : "0"}
-                    onChange={(e) => {
-                      const isTGR = e.target.value === "1";
-                      setTgr(isTGR);
-                      if (!isTGR) {
-                        setAmountTGR("");
-                      }
-                      setStatus(isTGR ? "tgr" : "NULL"); // Mengatur status sesuai dengan nilai Tgr
-                    }}
-                  >
-                    <option value="0">Tidak</option>
-                    <option value="1">Ya</option>
-                  </select>
-                </div>
-              </div>
-              {Tgr && (
-                <div className="field">
-                  <label className="label">Jumlah TGR</label>
-                  <div className="control">
-                    <input
-                      type="number"
-                      className="w-full input input-bordered"
-                      value={amountTGR}
-                      onChange={(e) => setAmountTGR(e.target.value)}
-                      placeholder="0"
-                    />
-                  </div>
-                </div>
-              )}
+              
               <div className="field">
                 <label className="label">Kata Sandi</label>
                 <div className="control">
@@ -151,6 +114,7 @@ const FormEditUser = () => {
                   />
                 </div>
               </div>
+
               <div className="mt-8">
                 <div className="control">
                   <button type="submit" className="btn btn-primary">
@@ -167,4 +131,4 @@ const FormEditUser = () => {
   );
 };
 
-export default FormEditUser;
+export default FormEditAdmin;

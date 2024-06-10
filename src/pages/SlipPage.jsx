@@ -5,11 +5,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
+import ModalAddKeterangan from "../components/modal/ModalAddKeterangan";
 
 const SlipPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isError, user } = useSelector((state) => state.auth);
+  const [addKet, setAddket] = useState(false)
+  const [idSlip, setIdSlip] = useState([])
 
   useEffect(() => {
     dispatch(getMe());
@@ -68,14 +71,11 @@ const SlipPage = () => {
     }
   };
 
-  const TolakSlip = async (slipId) => {
-    try {
-      await axios.patch(`http://localhost:5000/slips/tolak/${slipId}`);
-      getSlip();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  const handleModal = async (id) => {
+    setIdSlip(id)
+    setAddket(true)
+  }
 
   return (
     <Layout>
@@ -156,7 +156,7 @@ const SlipPage = () => {
                             <button
                               type="button"
                               className="btn btn-error"
-                              onClick={() => TolakSlip(slip.id)}
+                              onClick={() => handleModal(slip && slip.id)}
                             >
                               Tolak
                             </button>
@@ -183,6 +183,10 @@ const SlipPage = () => {
           </div>
         )}
       </div>
+
+      {addKet && (
+        <ModalAddKeterangan setAddKet={setAddket} idSlip={idSlip} />
+      )}
     </Layout>
   );
 };

@@ -13,6 +13,8 @@ import RiwayatsubPage from "./pages/RiwayatsubPage";
 import PengajuanUserPage from "./pages/PengajuanUserPage";
 import RiwayatslipPage from "./pages/RiwayatslipPage";
 import SlipUserPage from "./pages/SlipUserPage";
+import AddAdmin from "./pages/AddAdmin";
+import EditAdmin from "./pages/EditAdmin";
 
 function App() {
   return (
@@ -23,7 +25,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/add" element={<AddUser />} />
+          <Route path="/admin/add" element={<AddAdmin />} />
           <Route path="/users/edit/:id" element={<EditUser />} />
+          <Route path="/admin/edit/:id" element={<EditAdmin />} />
           <Route path="/skpd" element={<SKPD />} />
           <Route path="/submission" element={<SubmissionPage />} />
           <Route path="/slip" element={<SlipPage />} />
