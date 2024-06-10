@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
 import axios from "axios";
+import ModalAddKeteranganPengajuan from "../components/modal/ModalAddKeteranganPengajuan";
 
 const SubmissionPage = () => {
   const [Subs, setSubs] = useState([]);
@@ -13,6 +14,8 @@ const SubmissionPage = () => {
   const navigate = useNavigate();
   const [lihat, setLihat] = useState(null);
   const { isError, user } = useSelector((state) => state.auth);
+  const [bukaModal, setBukaModal] = useState(false);
+  const [idSub, setIdSubs] = useState([]);
 
   useEffect(() => {
     dispatch(getMe());
@@ -69,15 +72,6 @@ const SubmissionPage = () => {
     (a, b) => statusOrder[a.status] - statusOrder[b.status]
   );
 
-  const TolakSub = async (subId) => {
-    try {
-      await axios.patch(`http://localhost:5000/submissions/tolak/${subId}`);
-      getSub();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const AccSub = async (subId, idUser) => {
     try {
       await axios.patch(`http://localhost:5000/submissions/terima/${subId}`, {
@@ -89,6 +83,10 @@ const SubmissionPage = () => {
     }
   };
 
+  const handleTolak = async (id)=> {
+    setIdSubs(id)
+    setBukaModal(true)
+  }
   
   return (
     <Layout>
@@ -164,7 +162,7 @@ const SubmissionPage = () => {
                               <button
                                 type="button"
                                 className="btn btn-error"
-                                onClick={() => TolakSub(sub.id)}
+                                onClick={() => handleTolak(sub && sub.id)}
                               >
                                 Tolak
                               </button>
@@ -220,6 +218,10 @@ const SubmissionPage = () => {
           </>
         )}
       </div>
+      {bukaModal && (
+
+      <ModalAddKeteranganPengajuan setBukaModal={setBukaModal} idSubs={idSub}/>
+      )}
     </Layout>
   );
 };

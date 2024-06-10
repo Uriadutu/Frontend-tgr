@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
 import axios from "axios";
+import ModalKeteranganPengajuan from "./modal/ModalKeteranganPengajuan";
 
 const Riwayatitem = () => {
   const dispatch = useDispatch();
@@ -11,17 +12,19 @@ const Riwayatitem = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [SubsAdmin, setSubsAdmin] = useState([]);
   const id = user && user.id;
+  const [bukaModal, setBukaModal] = useState(false);
+  const [idSub, setIdSubs] = useState([]);
 
-   const getSubbyId = async (userId) => {
-     try {
-       const response = await axios.get(
-         `http://localhost:5000/submissions/user/${userId}`
-       );
-       setSubsAdmin(response.data);
-     } catch (error) {
-       console.log(error);
-     }
-   };
+  const getSubbyId = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/submissions/user/${userId}`
+      );
+      setSubsAdmin(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getMe());
@@ -82,6 +85,10 @@ const Riwayatitem = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleOpenModal = (id) => {
+    setIdSubs(id);
+    setBukaModal(true);
+  };
   return (
     <>
       <div className="">
@@ -93,6 +100,7 @@ const Riwayatitem = () => {
                   <th>No</th>
                   <th>Nama</th>
                   <th>Status</th>
+                  <th>Keterangan</th>
                   <th>Terakhir diperbarui</th>
                 </tr>
               </thead>
@@ -103,16 +111,30 @@ const Riwayatitem = () => {
                     <td>
                       Fotokopi KTP, Surat Rekomendasi dan Surat Permohonan
                     </td>
-                    <td
-                      className={` ${
-                        item.status === "Diterima"
-                          ? "badge bg-green-600 text-white"
-                          : item.status === "Ditolak"
-                          ? "badge bg-red-600 text-white"
-                          : "badge bg-yellow-600 text-white"
-                      }`}
-                    >
-                      {item.status}
+                    <td>
+                      <span
+                        className={` ${
+                          item.status === "Diterima"
+                            ? "badge bg-green-600 text-white"
+                            : item.status === "Ditolak"
+                            ? "badge bg-red-600 text-white"
+                            : "badge bg-yellow-600 text-white"
+                        }`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className="">
+                      {item && item.keterangan !== "-" ? (
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => handleOpenModal(item.uuid)}
+                        >
+                          Lihat
+                        </button>
+                      ) : (
+                        <p>-</p>
+                      )}
                     </td>
                     <td>{formatDate(item.createdAt)}</td>
                   </tr>
@@ -190,6 +212,12 @@ const Riwayatitem = () => {
           </>
         )}
       </div>
+      {bukaModal && (
+        <ModalKeteranganPengajuan
+          setModalKeterangan={setBukaModal}
+          IdSubs={idSub}
+        />
+      )}
     </>
   );
 };
