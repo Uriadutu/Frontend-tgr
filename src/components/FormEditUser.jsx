@@ -27,7 +27,7 @@ const FormEditUser = () => {
       setPassword(""); // Tidak memuat kata sandi pengguna untuk keamanan
       setconfirmPassword(""); // Tidak memuat kata sandi pengguna untuk keamanan
       setRole(userData.role);
-      setStatus(userData.status); // Atur status dari data pengguna
+      setStatus(userData.isTGR ? "tgr" : "NULL"); // Mengatur status sesuai dengan nilai Tgr dari user
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -40,6 +40,10 @@ const FormEditUser = () => {
   const updateUser = async (e) => {
     e.preventDefault();
 
+    // Mengatur status berdasarkan nilai Tgr
+    const updatedStatus = Tgr ? "tgr" : "bebasTGR";
+    setStatus(updatedStatus);
+
     try {
       await axios.patch(`http://localhost:5000/users/${id}`, {
         name: Nama,
@@ -49,7 +53,7 @@ const FormEditUser = () => {
         isTGR: Tgr,
         amountTGR: Tgr ? amountTGR : 0,
         role: Role,
-        status: Tgr ? "tgr" : "NULL", // Mengubah status menjadi "tgr" jika Tgr dipilih
+        status: updatedStatus, // Mengubah status menjadi "tgr" jika Tgr dipilih, atau "NULL" jika tidak
       });
       navigate("/users");
     } catch (error) {
@@ -105,7 +109,6 @@ const FormEditUser = () => {
                       if (!isTGR) {
                         setAmountTGR("");
                       }
-                      setStatus(isTGR ? "tgr" : "NULL"); // Mengatur status sesuai dengan nilai Tgr
                     }}
                   >
                     <option value="0">Tidak</option>
@@ -127,6 +130,7 @@ const FormEditUser = () => {
                   </div>
                 </div>
               )}
+
               <div className="field">
                 <label className="label">Kata Sandi</label>
                 <div className="control">

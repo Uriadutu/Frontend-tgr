@@ -23,13 +23,14 @@ const ModalAddKeterangan = ({ idSlip, setAddKet }) => {
       >
         <div className="w-full max-w-lg bg-white rounded-lg shadow-lg">
           <div className="flex items-center justify-between p-4 border-b rounded-t">
-            <h3 className="text-xl font-semibold text-gray-900">Tambah SKPD</h3>
+            <h3 className="text-xl font-semibold text-gray-900">Tambah Keterangan</h3>
             <button
               onClick={() => setAddKet(false)}
               type="button"
               className="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto"
               data-modal-hide="default-modal"
             >
+               
               <svg
                 className="w-3 h-3"
                 aria-hidden="true"

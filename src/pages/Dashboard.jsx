@@ -95,6 +95,7 @@ const DashboardAdmin = () => {
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">Dashboard Admin</h1>
+      <h3 className="mb-4 text-xl font-semibold">Halo, {user.name}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="relative bg-white shadow-md rounded-lg p-6">
           <div className="absolute top-0 left-0 h-full w-2 bg-blue-500 rounded-tl-lg rounded-bl-lg"></div>
@@ -194,6 +195,7 @@ const Dashboard = () => {
 
   switch (user && user?.role) {
     case "admin":
+    case "superadmin":
       dashboard = <DashboardAdmin />;
       break;
     case "user":

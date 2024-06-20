@@ -98,41 +98,38 @@ const DashboardUser = () => {
 
   let contentToRender = null;
 
+  if (
+    (user && user.status === null) ||
+    (user && user.status === "") ||
+    (user && user.status === "NULL")
+  ) {
+    contentToRender = statusNull();
+    console.log("status null");
+  } else if (user && user.status === "bebasTGR") {
+        contentToRender = <NoTGRContent user={user} />;
+  } else {
     if (
-      (user && user.status === null) ||
-      (user && user.status === "") ||
-      (user && user.status === "NULL")
+      (submission && submission.status === "Diproses") ||
+      (slip && slip.status === "Diproses")
     ) {
-      contentToRender = statusNull();
-      console.log("status null");
-
+      contentToRender = <ValidasiUser user={user} />;
     } else {
-      if (
-        (submission && submission.status === "Diproses") ||
-        (slip && slip.status === "Diproses")
-      ) {
+      if (user.amountTGR > 0 && user.isTGR) {
+        contentToRender = <TGRContent user={user} />;
+      } else if (user.amountTGR === 0 && user.isTGR) {
+        contentToRender = <NoTGRContent user={user} />;
+      } else if (submission && submission.status === "Diproses") {
         contentToRender = <ValidasiUser user={user} />;
-      } else {
-        if (user.amountTGR > 0 && user.isTGR) {
-          contentToRender = <TGRContent user={user} />;
-        } else if (user.amountTGR === 0 && user.isTGR) {
-          contentToRender = <NoTGRContent user={user} />;
-        } else if (submission && submission.status === "Diproses") {
-          contentToRender = <ValidasiUser user={user} />;
-        } else if (slip && slip.status === "Diproses") {
-        } else if (slip && slip.status === "Ditolak") {
-          contentToRender = <NoTGRContent user={user} />;
-        } else if (submission && submission.status === "Ditolak") {
-          contentToRender = <NoTGRContent user={user} />;
-        } else if (
-          (user && user.amountTGR === 0) ||
-          (slip && slip.isTGR === 0)
-        ) {
-          contentToRender = <DocumentUser user={user} />;
-        }
+      } else if (slip && slip.status === "Diproses") {
+      } else if (slip && slip.status === "Ditolak") {
+        contentToRender = <NoTGRContent user={user} />;
+      } else if (submission && submission.status === "Ditolak") {
+        contentToRender = <NoTGRContent user={user} />;
+      } else if ((user && user.amountTGR === 0) || (slip && slip.isTGR === 0)) {
+        contentToRender = <DocumentUser user={user} />;
       }
     }
- 
+  }
 
   return <>{contentToRender}</>;
 };
