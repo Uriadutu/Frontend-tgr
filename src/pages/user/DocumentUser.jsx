@@ -12,7 +12,7 @@ const DocumentUser = ({ user }) => {
 
   const handleExportPDF = useReactToPrint({
     content: () => ComponentToPDF.current,
-    documentTitle: `Perkembangan_Latihan(SiAtlet).pdf`,
+    documentTitle: `LaporanBebasTGR.pdf`,
   });
   
 
@@ -64,7 +64,7 @@ const waktu = tanggalPDF(sekarang);
             <div className=" flex justify-center w-full">
               <div className="text-center">
                 <h1 className="text-[15px] font-bold">
-                  PEMERINTA KABUPATEN MINAHASA UTARA
+                  PEMERINTAH KABUPATEN MINAHASA UTARA
                 </h1>
                 <h1 className="text-[18px] font-bold">INSPEKTORAT</h1>
                 <h1 className="text-[13px] font-bold">
